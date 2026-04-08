@@ -1,7 +1,10 @@
 package com.example.demo.testsupport;
 
+import com.example.demo.model.Address;
 import com.example.demo.model.Student;
 import com.example.demo.proto.StudentMessages;
+
+import java.util.List;
 
 public final class SampleStudentFixture {
 
@@ -17,7 +20,9 @@ public final class SampleStudentFixture {
                 "david@edgerunners.com", 
                 "Santo Domingo", 
                 1, 
-                false
+                false,
+                new Address("NUSA", "Night City", "Megabuilding H4"),
+                List.of("Sandevistan Operations", "Cyberware Maintenance", "Netrunning 101")
         );
     }
 
@@ -30,6 +35,14 @@ public final class SampleStudentFixture {
                 .setGroup("Santo Domingo")
                 .setYearOfStudy(1)
                 .setActive(false)
+                .setAddress(StudentMessages.Address.newBuilder()
+                        .setCountry("NUSA")
+                        .setCity("Night City")
+                        .setStreet("Megabuilding H4")
+                        .build())
+                .addCourses("Sandevistan Operations")
+                .addCourses("Cyberware Maintenance")
+                .addCourses("Netrunning 101")
                 .build();
     }
 }

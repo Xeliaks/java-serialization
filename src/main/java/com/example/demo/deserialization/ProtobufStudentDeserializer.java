@@ -1,7 +1,6 @@
 package com.example.demo.deserialization;
 
 import com.example.demo.proto.StudentMessages;
-import com.example.demo.proto.UserMessages;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.TextFormat;
 

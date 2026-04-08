@@ -1,0 +1,9 @@
+<student>
+    <id>101</id>
+    <firstName>David</firstName>
+    <lastName>Martinez</lastName>
+    <email>david@edgerunners.com</email>
+    <group>Santo Domingo</group>
+    <yearOfStudy>1</yearOfStudy>
+    <active>false</active>
+</student>

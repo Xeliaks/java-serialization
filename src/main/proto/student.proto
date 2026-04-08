@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package demo;
+
+option java_package = "com.example.demo.proto";
+option java_outer_classname = "StudentMessages";
+
+message Student {
+  int32 id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string email = 4;
+  string group = 5;
+  int32 year_of_study = 6;
+  bool active = 7;
+}

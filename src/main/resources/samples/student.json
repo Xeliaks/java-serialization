@@ -1,0 +1,9 @@
+{
+  "id": 101,
+  "firstName": "David",
+  "lastName": "Martinez",
+  "email": "david@edgerunners.com",
+  "group": "Santo Domingo",
+  "yearOfStudy": 1,
+  "active": false
+}

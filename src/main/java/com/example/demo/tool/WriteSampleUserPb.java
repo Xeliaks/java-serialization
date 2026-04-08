@@ -13,9 +13,9 @@ public final class WriteSampleUserPb {
 
     public static void main(String[] args) throws Exception {
         UserMessages.User user = UserMessages.User.newBuilder()
-                .setId(42)
-                .setName("Jane Developer")
-                .setEmail("jane@example.com")
+                .setId(310)
+                .setName("Johnny Silverhand")
+                .setEmail("johnny@nightcity.com")
                 .build();
         Path out = Path.of("src/main/resources/samples/user.pb");
         Files.write(out, user.toByteArray());

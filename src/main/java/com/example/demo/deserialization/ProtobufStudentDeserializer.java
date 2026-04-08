@@ -1,6 +1,7 @@
 package com.example.demo.deserialization;
 
 import com.example.demo.proto.StudentMessages;
+import com.example.demo.proto.UserMessages;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.TextFormat;
 
@@ -36,5 +37,9 @@ public final class ProtobufStudentDeserializer {
             TextFormat.merge(text, builder);
             return builder.build();
         }
+    }
+
+    public UserMessages.User fromBinaryFile(String filePath) throws IOException {
+        return UserMessages.User.parseFrom(java.nio.file.Files.readAllBytes(java.nio.file.Path.of(filePath)));
     }
 }

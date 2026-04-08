@@ -37,4 +37,8 @@ public final class ProtobufUserDeserializer {
             return builder.build();
         }
     }
+
+    public UserMessages.User fromBinaryFile(String filePath) throws IOException {
+        return UserMessages.User.parseFrom(java.nio.file.Files.readAllBytes(java.nio.file.Path.of(filePath)));
+    }
 }

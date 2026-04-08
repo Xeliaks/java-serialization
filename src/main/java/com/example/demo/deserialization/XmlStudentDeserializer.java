@@ -18,4 +18,8 @@ public final class XmlStudentDeserializer {
             return mapper.readValue(in, Student.class);
         }
     }
+
+    public Student fromFile(String filePath) throws IOException {
+        return mapper.readValue(new java.io.File(filePath), Student.class);
+    }
 }

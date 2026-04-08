@@ -1,37 +1,69 @@
 package com.example.demo;
 
-import com.example.demo.deserialization.JsonUserDeserializer;
-import com.example.demo.deserialization.ProtobufUserDeserializer;
-import com.example.demo.deserialization.XmlUserDeserializer;
+import com.example.demo.deserialization.*;
+import com.example.demo.serialization.*;
 import com.example.demo.model.User;
 import com.example.demo.proto.UserMessages;
+import com.example.demo.model.Student;
+import com.example.demo.proto.StudentMessages;
 
 public final class DemoApplication {
 
     public static void main(String[] args) throws Exception {
-        JsonUserDeserializer json = new JsonUserDeserializer();
-        XmlUserDeserializer xml = new XmlUserDeserializer();
-        ProtobufUserDeserializer proto = new ProtobufUserDeserializer();
+        System.out.println("--- Processing User ---");
+        processUser();
 
-        User fromJson = json.fromClasspathResource("/samples/user.json");
-        User fromXml = xml.fromClasspathResource("/samples/user.xml");
-        UserMessages.User fromProtoText = proto.fromTextFormatClasspathResource("/samples/user.textproto");
-        UserMessages.User fromProtoBinary = proto.fromBinaryClasspathResource("/samples/user.pb");
+        System.out.println("\n--- Processing Student ---");
+        processStudent();
+    }
 
-        System.out.println("JSON -> " + fromJson);
-        System.out.println("XML  -> " + fromXml);
-        System.out.println("Protobuf (TextFormat) -> id=" + fromProtoText.getId()
-                + ", name=" + fromProtoText.getName()
-                + ", email=" + fromProtoText.getEmail());
-        System.out.println("Protobuf (binary)     -> id=" + fromProtoBinary.getId()
-                + ", name=" + fromProtoBinary.getName()
-                + ", email=" + fromProtoBinary.getEmail());
+    private static void processUser() throws Exception {
+        JsonUserDeserializer jsonDeserializer = new JsonUserDeserializer();
+        User pojo = jsonDeserializer.fromClasspathResource("/samples/user.json");
+        System.out.println("Read POJO: " + pojo);
 
-        if (!fromJson.equals(new User(fromProtoBinary.getId(), fromProtoBinary.getName(), fromProtoBinary.getEmail()))) {
-            throw new IllegalStateException("JSON and Protobuf binary payloads describe different users.");
-        }
-        if (!fromXml.equals(fromJson)) {
-            throw new IllegalStateException("XML and JSON payloads describe different users.");
-        }
+        UserMessages.User protoObj = UserMessages.User.newBuilder()
+                .setId(pojo.getId())
+                .setName(pojo.getName())
+                .setEmail(pojo.getEmail())
+                .build();
+
+        String outDir = "target/output/";
+        
+        new JsonUserSerializer().toFile(pojo, outDir + "user_out.json");
+        System.out.println("Wrote -> " + outDir + "user_out.json");
+
+        new XmlUserSerializer().toFile(pojo, outDir + "user_out.xml");
+        System.out.println("Wrote -> " + outDir + "user_out.xml");
+
+        new ProtobufUserSerializer().toBinaryFile(protoObj, outDir + "user_out.pb");
+        System.out.println("Wrote -> " + outDir + "user_out.pb");
+    }
+
+    private static void processStudent() throws Exception {
+        JsonStudentDeserializer jsonDeserializer = new JsonStudentDeserializer();
+        Student pojo = jsonDeserializer.fromClasspathResource("/samples/student.json");
+        System.out.println("Read POJO: " + pojo);
+
+        StudentMessages.Student protoObj = StudentMessages.Student.newBuilder()
+                .setId(pojo.getId())
+                .setFirstName(pojo.getFirstName())
+                .setLastName(pojo.getLastName())
+                .setEmail(pojo.getEmail())
+                .setGroup(pojo.getGroup())
+                .setYearOfStudy(pojo.getYearOfStudy())
+                .setActive(pojo.isActive())
+                .build();
+
+        String outDir = "target/output/";
+
+        new JsonStudentSerializer().toFile(pojo, outDir + "student_out.json");
+        System.out.println("Wrote -> " + outDir + "student_out.json");
+
+        new XmlStudentSerializer().toFile(pojo, outDir + "student_out.xml");
+        System.out.println("Wrote -> " + outDir + "student_out.xml");
+
+        new ProtobufStudentSerializer().toBinaryFile(protoObj, outDir + "student_out.pb");
+        System.out.println("Wrote -> " + outDir + "student_out.pb");
     }
 }

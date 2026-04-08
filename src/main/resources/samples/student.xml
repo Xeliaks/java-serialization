@@ -6,4 +6,14 @@
     <group>Santo Domingo</group>
     <yearOfStudy>1</yearOfStudy>
     <active>false</active>
+    <address>
+        <country>NUSA</country>
+        <city>Night City</city>
+        <street>Megabuilding H4</street>
+    </address>
+    <courses>
+        <course>Sandevistan Operations</course>
+        <course>Cyberware Maintenance</course>
+        <course>Netrunning 101</course>
+    </courses>
 </student>

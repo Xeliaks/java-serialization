@@ -1,9 +1,11 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+import java.util.List;
 import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -31,10 +33,17 @@ public final class Student {
     @JacksonXmlProperty(localName = "active")
     private boolean active;
 
+    @JacksonXmlProperty(localName = "address")
+    private Address address;
+
+    @JacksonXmlElementWrapper(localName = "courses")
+    @JacksonXmlProperty(localName = "course")
+    private List<String> courses;
+
     public Student() {
     }
 
-    public Student(int id, String firstName, String lastName, String email, String group, int yearOfStudy, boolean active) {
+    public Student(int id, String firstName, String lastName, String email, String group, int yearOfStudy, boolean active, Address address, List<String> courses) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -42,6 +51,8 @@ public final class Student {
         this.group = group;
         this.yearOfStudy = yearOfStudy;
         this.active = active;
+        this.address = address;
+        this.courses = courses;
     }
 
     public int getId() { return id; }
@@ -65,6 +76,12 @@ public final class Student {
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
 
+    public Address getAddress() { return address; }
+    public void setAddress(Address address) { this.address = address; }
+
+    public List<String> getCourses() { return courses; }
+    public void setCourses(List<String> courses) { this.courses = courses; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,12 +93,14 @@ public final class Student {
                Objects.equals(firstName, student.firstName) &&
                Objects.equals(lastName, student.lastName) &&
                Objects.equals(email, student.email) &&
-               Objects.equals(group, student.group);
+               Objects.equals(group, student.group) &&
+               Objects.equals(address, student.address) &&
+               Objects.equals(courses, student.courses);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, group, yearOfStudy, active);
+        return Objects.hash(id, firstName, lastName, email, group, yearOfStudy, active, address, courses);
     }
 
     @Override
@@ -94,6 +113,8 @@ public final class Student {
                 ", group='" + group + '\'' +
                 ", yearOfStudy=" + yearOfStudy +
                 ", active=" + active +
+                ", address=" + address +
+                ", courses=" + courses +
                 '}';
     }
 }

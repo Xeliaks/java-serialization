@@ -5,3 +5,11 @@ email: "david@edgerunners.com"
 group: "Santo Domingo"
 year_of_study: 1
 active: false
+address {
+  country: "NUSA"
+  city: "Night City"
+  street: "Megabuilding H4"
+}
+courses: "Sandevistan Operations"
+courses: "Cyberware Maintenance"
+courses: "Netrunning 101"

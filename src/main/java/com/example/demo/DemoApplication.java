@@ -41,9 +41,17 @@ public final class DemoApplication {
     }
 
     private static void processStudent() throws Exception {
+
         JsonStudentDeserializer jsonDeserializer = new JsonStudentDeserializer();
         Student pojo = jsonDeserializer.fromClasspathResource("/samples/student.json");
         System.out.println("Read POJO: " + pojo);
+
+
+        StudentMessages.Address protoAddress = StudentMessages.Address.newBuilder()
+                .setCountry(pojo.getAddress().getCountry())
+                .setCity(pojo.getAddress().getCity())
+                .setStreet(pojo.getAddress().getStreet())
+                .build();
 
         StudentMessages.Student protoObj = StudentMessages.Student.newBuilder()
                 .setId(pojo.getId())
@@ -53,7 +61,10 @@ public final class DemoApplication {
                 .setGroup(pojo.getGroup())
                 .setYearOfStudy(pojo.getYearOfStudy())
                 .setActive(pojo.isActive())
+                .setAddress(protoAddress)
+                .addAllCourses(pojo.getCourses()) // Handles the List<String>
                 .build();
+
 
         String outDir = "target/output/";
 
